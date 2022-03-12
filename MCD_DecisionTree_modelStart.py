@@ -1,7 +1,7 @@
 import pickle
 import gzip
 
-with gzip.open(r'C:\Users\may\Desktop\FYP_VS\MCD\MCD_DecisionTree_model.pgz','r') as f:
+with gzip.open(r'.\MCD.\MCD_DecisionTree_model.pgz','r') as f:
     Dt_Model = pickle.load(f)
 
 def predict(input):

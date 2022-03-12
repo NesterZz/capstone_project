@@ -1,7 +1,7 @@
 import pickle
 import gzip
 
-with gzip.open(r'C:\Users\may\Desktop\FYP_VS\MCD\MCD_Linear_SVR_model.pgz','r') as f:
+with gzip.open(r'.\MCD.\MCD_Linear_SVR_model.pgz','r') as f:
     Svr_Model = pickle.load(f)
 
 def predict(input):

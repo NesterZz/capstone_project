@@ -11,12 +11,12 @@ plt.style.use('fivethirtyeight')
 
 import pickle
 # Load
-with open(r'C:\Users\may\Desktop\FYP_VS\MCD\MCD_cleaned.pickle', 'rb') as f:
+with open(r'.\MCD.\MCD_cleaned.pickle', 'rb') as f:
     new_dict = pickle.load(f)
 print("Show the cleaned data")
 print(new_dict)
 
-MCD_df =pd.read_csv(r"C:\Users\may\Desktop\FYP_VS\MCD\MCD_Price.csv")
+MCD_df =pd.read_csv(r".\MCD.\MCD_Price.csv")
 print("Show the price data")
 print(MCD_df)
 
@@ -141,7 +141,7 @@ plt.title('Prediction by LSTM')
 plt.xlabel('Time Scale')
 plt.ylabel('Scaled USD')
 plt.legend()
-plt.savefig(r"C:\Users\may\Desktop\FYP_VS\MCD\MCD_LSTM.png")
+plt.savefig(r".\MCD.\MCD_LSTM.png")
 
 
 
@@ -151,6 +151,6 @@ print(r2_score(y_test, y_pred))
 
 # Save
 import gzip
-with gzip.GzipFile(r'C:\Users\may\Desktop\FYP_VS\MCD\MCD_LSTM_model.pgz', 'w') as f:
+with gzip.GzipFile(r'.\MCD.\MCD_LSTM_model.pgz', 'w') as f:
     pickle.dump(lstm,f)
 print("Model saved!")

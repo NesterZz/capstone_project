@@ -9,7 +9,7 @@ import csv
 plt.style.use('fivethirtyeight')
 
 
-non_place_data = pd.read_csv(r"C:\Users\may\Desktop\FYP_VS\AAPL\AAPL_scraped_tweets.csv", header=0,            
+non_place_data = pd.read_csv(r"..\AAPL\AAPL_scraped_tweets.csv", header=0,            
                   names=["date","tweet","tweet_id"])
 print(non_place_data)
 non_place_data['date'] = non_place_data['date'].replace({'date':''}) #remove redundant date
@@ -21,8 +21,8 @@ non_place_data.dropna(axis=0, how='any',inplace=True) #remove all null data
 print (non_place_data.isnull().sum()) #check is there are any null data
 
 
-non_place_data.to_csv(r"C:\Users\may\Desktop\FYP_VS\AAPL\AAPL_placed_data.csv",index=False) #output the csv file by cleaning data in first step
-abc=pd.read_csv(r"C:\Users\may\Desktop\FYP_VS\AAPL\AAPL_placed_data.csv")
+non_place_data.to_csv(r"..\AAPL\AAPL_placed_data.csv",index=False) #output the csv file by cleaning data in first step
+abc=pd.read_csv(r"..\AAPL\AAPL_placed_data.csv")
 print(abc)
 
 non_place_data.sort_values('date',ascending=False,inplace=True)
@@ -32,7 +32,7 @@ print(non_place_data)
 #non_place_data.sort('date', format="%d/%m/%Y") # This now sorts in date order
 
 header = ['Tweet_Id','Date','Tweet']
-with open(r'C:\Users\may\Desktop\FYP_VS\AAPL\AAPL_cleaned.csv','w',encoding='utf-8', newline='') as data_csv:
+with open(r'..\AAPL\AAPL_cleaned.csv','w',encoding='utf-8', newline='') as data_csv:
     write=csv.writer(data_csv)
     write.writerow(header)
     
@@ -47,7 +47,7 @@ with open(r'C:\Users\may\Desktop\FYP_VS\AAPL\AAPL_cleaned.csv','w',encoding='utf
 
 
         
-Test3 = pd.read_csv(r"C:\Users\may\Desktop\FYP_VS\AAPL\AAPL_cleaned.csv")
+Test3 = pd.read_csv(r"..\AAPL\AAPL_cleaned.csv")
 Test3['Date']= Test3['Date'].str.split(" ", expand = True)[0] #reformat the data
 Test3['Date'] = Test3['Date'].str.replace('/','-')
 
@@ -83,13 +83,13 @@ for i in range(0,len(adata)-1):
         
 
 print(aadata)
-aadata.to_csv(r"C:\Users\may\Desktop\FYP_VS\AAPL\Final_AAPL_cleaned.csv",index=False)
+aadata.to_csv(r"..\AAPL\Final_AAPL_cleaned.csv",index=False)
 
 import pickle
 
 #save
 
-with open(r'C:\Users\may\Desktop\FYP_VS\AAPL\AAPL_cleaned.pickle', 'wb') as f:
+with open(r'..\AAPL\AAPL_cleaned.pickle', 'wb') as f:
     pickle.dump(aadata, f)
 
         
