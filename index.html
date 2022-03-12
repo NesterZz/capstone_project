@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Predict</title>
+
+</head>
+<script src="index.js"></script>
+<body>
+
+  <label>Choose</label><br>
+  <select name="pets" id="type">
+    <option value="knn" selected>KNN</option>
+    <option value="dt">Decision Tree</option>
+    <option value="svr">LinearSVR</option>
+    <option value="svc">LinearSVC</option>
+    <option value="rf">Random Forest</option>
+</select>
+<br>
+
+
+  <label>pos</label><br>
+  <input type="text" id="good" value="5.9"><br>
+  <label>neg</label><br>
+  <input type="text" id="bad" value="3"><br>
+  
+  <input type="submit" value="Submit" onclick="submit()"><br><br>
+
+  <p>預測結果： <span id="resultText"></span></p>
+
+  
+</body>
+</html>
