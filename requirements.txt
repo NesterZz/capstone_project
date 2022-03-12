@@ -1,0 +1,11 @@
+pickle
+gzip
+tweepy
+textblob
+wordcloud
+pandas
+numpy
+re
+matplotlib.pyplot
+csv
+nltk
