@@ -8,6 +8,11 @@ import matplotlib.pyplot as plt
 import csv
 plt.style.use('fivethirtyeight')
 
+#company="MCD"
+company="AAPL"
+#company="KO"
+
+
 consumer_key = 'orpXLO360oW1Gd6NVubof3he1'
 consumer_secret = 'pUsywlNahbUGD73OFmMFo17qGu3ouuMsmZku2UaeCi4gdWTG7p'
 access_token = '1457356059195023370-rHAuDBlBW2QNFoSVvlUsOmx0EX4UjI'
@@ -42,7 +47,7 @@ def fetch_tw(ids):
                      "tweet_id": status.id
                      }
             data = data.append(tweet_elem, ignore_index = True)
-    data.to_csv("C:/Users/may/Desktop/FYP_VS/AAPL/AAPL_scraped_tweets.csv", mode="a")
+    data.to_csv("C:/Users/may/Desktop/FYP_VS/"+company+"/AAPL_scraped_tweets.csv", mode="a")
 
 for i in range(chunks):
         try:
