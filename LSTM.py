@@ -9,28 +9,36 @@ import matplotlib.pyplot as plt
 import csv
 plt.style.use('fivethirtyeight')
 
+company="MCD/MCD"
+#company="AAPL/AAPL"
+#company="KO/KO"
+
+company_name="MCD"
+#company_name="AAPL"
+#company_name="KO"
+
 import pickle
 # Load
-with open(r'C:\Users\may\Desktop\FYP_VS\MCD\MCD_cleaned.pickle', 'rb') as f:
+with open(company+'_cleaned.pickle', 'rb') as f:
     new_dict = pickle.load(f)
 print("Show the cleaned data")
 print(new_dict)
 
-MCD_df =pd.read_csv(r"C:\Users\may\Desktop\FYP_VS\MCD\MCD_Price.csv")
+df_Company =pd.read_csv(company+"_Price.csv")
 print("Show the price data")
-print(MCD_df)
+print(df_Company)
 
 new_dict['Prices']=''
 
 indx=0
 for i in range (0,len(new_dict)):
-    for j in range (0,len(MCD_df)):
+    for j in range (0,len(df_Company)):
         get_tweet_date=new_dict.Date.iloc[i]
-        get_stock_date=MCD_df.Date.iloc[j]
+        get_stock_date=df_Company.Date.iloc[j]
         if(str(get_stock_date)==str(get_tweet_date)):
             #print(get_stock_date," ",get_tweet_date)
             # ccdata.set_value(i,'Prices',int(read_stock_p.Close[j]))
-            new_dict['Prices'].iloc[i] = int(MCD_df.Close[j])
+            new_dict['Prices'].iloc[i] = int(df_Company.Close[j])
 print(new_dict)
 
 
@@ -70,21 +78,21 @@ for indexx, row in new_dict.T.iteritems():
         print (indexx)
 print(new_dict)
 
-train_MCD=new_dict[['Date','Prices','Comp','Negative','Neutral','Positive']].copy()
-print(train_MCD)
+train_Company=new_dict[['Date','Prices','Comp','Negative','Neutral','Positive']].copy()
+print(train_Company)
 
 test_end_index = 0
-train_start_index = train_MCD.shape[0]-1
-train_end_index = int(train_MCD.shape[0]*0.3)
+train_start_index = train_Company.shape[0]-1
+train_end_index = int(train_Company.shape[0]*0.3)
 test_start_index = train_end_index-1
 
-train = train_MCD.loc[train_end_index:train_start_index]
+train = train_Company.loc[train_end_index:train_start_index]
 print(train)
-test = train_MCD.loc[test_end_index:test_start_index]
+test = train_Company.loc[test_end_index:test_start_index]
 print(test)
 sentiment_score_list = []
 for date, row in train.T.iteritems():
-    sentiment_score = np.asarray([train_MCD.loc[date, 'Negative'],train_MCD.loc[date, 'Positive']])
+    sentiment_score = np.asarray([train_Company.loc[date, 'Negative'],train_Company.loc[date, 'Positive']])
     sentiment_score_list.append(sentiment_score)
 numpy_df_train = np.asarray(sentiment_score_list)
 #print(numpy_df_train)
@@ -92,7 +100,7 @@ numpy_df_train.shape
 
 sentiment_score_list = []
 for date, row in test.T.iteritems():
-    sentiment_score = np.asarray([train_MCD.loc[date, 'Negative'],train_MCD.loc[date, 'Positive']])
+    sentiment_score = np.asarray([train_Company.loc[date, 'Negative'],train_Company.loc[date, 'Positive']])
     sentiment_score_list.append(sentiment_score)
 numpy_df_test = np.asarray(sentiment_score_list)
 y_train = pd.DataFrame(train['Prices'])
@@ -122,8 +130,13 @@ print(numpy_df_train)
 #Building the LSTM Model
 lstm = Sequential()
 
-lstm.add(LSTM(32, input_shape=(1, trainX.shape[1]), activation='relu', return_sequences=False))
 
+lstm.add(LSTM(16, input_shape=(1, trainX.shape[1]), activation='relu', return_sequences=True))
+lstm.add(Dropout(0.1))
+lstm.add(LSTM(32, input_shape=(1, trainX.shape[1]), activation='relu', return_sequences=True))
+lstm.add(Dropout(0.1))
+lstm.add(LSTM(64, input_shape=(1, trainX.shape[1]), activation='relu', return_sequences=False))
+lstm.add(Dropout(0.1))
 lstm.add(Dense(1))
 lstm.compile(loss='mean_squared_error', optimizer='adam')
 
@@ -141,7 +154,7 @@ plt.title('Prediction by LSTM')
 plt.xlabel('Time Scale')
 plt.ylabel('Scaled USD')
 plt.legend()
-plt.savefig(r"C:\Users\may\Desktop\FYP_VS\MCD\MCD_LSTM.png")
+plt.savefig(company+"_LSTM.png")
 
 
 
@@ -151,6 +164,6 @@ print(r2_score(y_test, y_pred))
 
 # Save
 import gzip
-with gzip.GzipFile(r'C:\Users\may\Desktop\FYP_VS\MCD\MCD_LSTM_model.pgz', 'w') as f:
+with gzip.GzipFile(company+'_LSTM_model.pgz', 'w') as f:
     pickle.dump(lstm,f)
 print("Model saved!")

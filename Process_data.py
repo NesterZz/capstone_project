@@ -8,9 +8,9 @@ import matplotlib.pyplot as plt
 import csv
 plt.style.use('fivethirtyeight')
 
-#company="MCD"
-company="AAPL"
-#company="KO"
+#company="MCD/MCD"
+company="AAPL/AAPL"
+#company="KO/KO"
 
 
 consumer_key = 'orpXLO360oW1Gd6NVubof3he1'
@@ -22,7 +22,7 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth,wait_on_rate_limit=True)
 
-tweet_url = pd.read_csv(r'C:\Users\may\Desktop\AAPL.txt', index_col= None, header = None, names = ["tweet_urls"])
+tweet_url = pd.read_csv('AAPL.txt', index_col= None, header = None, names = ["tweet_urls"])
 tweet_url.head()
 
 #Extract the tweet id
@@ -47,7 +47,7 @@ def fetch_tw(ids):
                      "tweet_id": status.id
                      }
             data = data.append(tweet_elem, ignore_index = True)
-    data.to_csv("C:/Users/may/Desktop/FYP_VS/"+company+"/AAPL_scraped_tweets.csv", mode="a")
+    data.to_csv(company+"_scraped_tweets.csv", mode="a")
 
 for i in range(chunks):
         try:
