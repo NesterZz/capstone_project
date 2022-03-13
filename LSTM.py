@@ -158,6 +158,7 @@ plt.savefig(company+"_LSTM.png")
 
 
 
+
 from sklearn.metrics import r2_score
 
 print(r2_score(y_test, y_pred))
