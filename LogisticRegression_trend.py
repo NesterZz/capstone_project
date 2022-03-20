@@ -9,13 +9,14 @@ import matplotlib.pyplot as plt
 import csv
 plt.style.use('fivethirtyeight')
 
-company="MCD/MCD"
-#company="AAPL/AAPL"
+#company="MCD/MCD"
+company="AAPL/AAPL"
 #company="KO/KO"
 
-company_name="MCD"
-#company_name="AAPL"
+#company_name="MCD"
+company_name="AAPL"
 #company_name="KO"
+
 
 import pickle
 # Load
@@ -52,6 +53,40 @@ new_dict.dropna(axis=0, how='any',inplace=True) #remove all null data
 new_dict.reset_index(drop=True, inplace=True)
 print(new_dict)
 
+
+
+
+aaadata=pd.DataFrame(columns=['Date','trend'])
+
+get_date=new_dict.Date.iloc[0]
+temp_df = pd.DataFrame([[get_date, 
+                                '0']], columns = ['Date','trend'])
+aaadata = pd.concat([aaadata, temp_df], axis = 0).reset_index(drop = True)
+
+for i in range(1,len(new_dict)):
+    get_price=new_dict.Prices.iloc[i]
+    get_date=new_dict.Date.iloc[i]
+    last_price=new_dict.Prices.iloc[i-1]
+    last_date=new_dict.Date.iloc[i-1]
+
+    if(last_price>get_price):
+        temp_df = pd.DataFrame([[get_date, 
+                                '0']], columns = ['Date','trend'])
+        aaadata = pd.concat([aaadata, temp_df], axis = 0).reset_index(drop = True)
+    if(last_price<get_price):
+        temp_df = pd.DataFrame([[get_date, 
+                                '1']], columns = ['Date','trend'])
+        aaadata = pd.concat([aaadata, temp_df], axis = 0).reset_index(drop = True)
+    if(last_price==get_price):
+        temp_df = pd.DataFrame([[get_date, 
+                                '2']], columns = ['Date','trend'])
+    
+       
+        aaadata = pd.concat([aaadata, temp_df], axis = 0).reset_index(drop = True) #error
+        
+print(aaadata)        
+aaadata.to_csv("ff.csv",index=False)
+
 #Making "prices" column as integer so mathematical operations could be performed easily.
 new_dict['Prices'] = new_dict['Prices'].apply(np.int64)
 
@@ -59,6 +94,7 @@ new_dict["Comp"] = ''
 new_dict["Negative"] = ''
 new_dict["Neutral"] = ''
 new_dict["Positive"] = ''
+new_dict["trend"] = ''
 
 import nltk
 
@@ -73,12 +109,17 @@ for indexx, row in new_dict.T.iteritems():
         new_dict['Negative'].loc[indexx] = sentence_sentiment['neg']
         new_dict['Neutral'].loc[indexx] = sentence_sentiment['neu']
         new_dict['Positive'].loc[indexx] = sentence_sentiment['compound']
+        new_dict['trend'].loc[indexx] = aaadata['trend'].loc[indexx]
     except TypeError:
         print (new_dict.loc[indexx, 'Tweet'])
         print (indexx)
 print(new_dict)
 
-train_Company=new_dict[['Date','Prices','Comp','Negative','Neutral','Positive']].copy()
+
+
+
+
+train_Company=new_dict[['Date','Prices','Comp','Negative','Neutral','Positive','trend']].copy()
 print(train_Company)
 
 test_end_index = 0
@@ -103,68 +144,33 @@ for date, row in test.T.iteritems():
     sentiment_score = np.asarray([train_Company.loc[date, 'Negative'],train_Company.loc[date, 'Positive']])
     sentiment_score_list.append(sentiment_score)
 numpy_df_test = np.asarray(sentiment_score_list)
-y_train = pd.DataFrame(train['Prices'])
-y_test = pd.DataFrame(test['Prices'])
+
+y_train = pd.DataFrame(train['trend'])
+y_test = pd.DataFrame(test['trend'])
 
 
-from sklearn.preprocessing import MinMaxScaler
-from keras.models import Sequential
-from keras.utils.vis_utils import plot_model
-from keras.layers import Dense, LSTM, Dropout, TimeDistributed, Flatten, Bidirectional
-
-#Scaling
-scaler = MinMaxScaler()
-feature_transform_train = scaler.fit_transform(numpy_df_train)
-#feature_transform_train= pd.DataFrame(columns=features, data=feature_transform)
-#feature_transform_train.head(7)
-feature_transform_test = scaler.fit_transform(numpy_df_test)
-#feature_transform_test= pd.DataFrame(columns=features, data=feature_transform)
-#feature_transform_test.head(7)
-
-#Process the data for LSTM
-trainX =np.array(numpy_df_train)
-testX =np.array(numpy_df_test)
-X_train = trainX.reshape(numpy_df_train.shape[0], 1, numpy_df_train.shape[1])
-X_test = testX.reshape(numpy_df_test.shape[0], 1, numpy_df_test.shape[1])
-print(numpy_df_train)
-#Building the LSTM Model
-lstm = Sequential()
+#use LR
+from sklearn.linear_model import LogisticRegression
 
 
-lstm.add(LSTM(50, input_shape=(1, trainX.shape[1]), activation='relu', return_sequences=True))
-lstm.add(Dropout(0.1))
-lstm.add(LSTM(50, input_shape=(1, trainX.shape[1]), activation='relu', return_sequences=True))
-lstm.add(Dropout(0.1))
-lstm.add(LSTM(50, input_shape=(1, trainX.shape[1]), activation='relu', return_sequences=False))
-lstm.add(Dropout(0.1))
-lstm.add(Dense(1))
-lstm.compile(loss='mean_squared_error', optimizer='adam')
+clf = LogisticRegression(random_state=0).fit(numpy_df_train, y_train)
 
-#Model Training
-history=lstm.fit(X_train, y_train, epochs=1000, batch_size=8, verbose=1, shuffle=False)
-
-#LSTM Prediction
-y_pred= lstm.predict(X_test)
-print(y_pred)
-
-#Predicted vs True Adj Close Value – LSTM
-plt.plot(y_test, label='True Value')
-plt.plot(y_pred, label='LSTM Value')
-plt.title('Prediction by LSTM')
-plt.xlabel('Time Scale')
-plt.ylabel('Scaled USD')
-plt.legend()
-plt.savefig(company+"_LSTM.png")
+prediction = clf.predict(numpy_df_test)
+print(prediction)
 
 
 
+idx=np.arange(int(test_end_index),int(test_start_index)+1)
+predictions_df_ = pd.DataFrame(data=prediction[0:], index = idx, columns=['trend'])
+print(predictions_df_)
 
 from sklearn.metrics import r2_score
+print(r2_score(y_test, prediction))
 
-print(r2_score(y_test, y_pred))
+
 
 # Save
 import gzip
-with gzip.GzipFile(company+'_LSTM_model.pgz', 'w') as f:
-    pickle.dump(lstm,f)
+with gzip.GzipFile(company+'_LogisticRegression_model_trend.pgz', 'w') as f:
+    pickle.dump(clf,f)
 print("Model saved!")

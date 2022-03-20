@@ -7,7 +7,7 @@
   <title>Predict</title>
 
 </head>
-<script src="index.js"></script>
+<script src="index2.js"></script>
 <body>
 
   <label>Choose one of the company</label><br>
@@ -22,9 +22,9 @@
   <select name="model" id="type">
     <option value="knn" selected>KNN</option>
     <option value="dt">Decision Tree</option>
-    <option value="svr">LinearSVR</option>
-    <option value="svc">LinearSVC</option>
-    <option value="rf">Random Forest</option>
+    <option value="nb">NB</option>
+    <option value="svc">SVC</option>
+    <option value="lg">Logistic Regression</option>
 </select>
 <br>
 
@@ -36,7 +36,7 @@
   
   <input type="submit" value="Submit" onclick="submit()"><br><br>
 
-  <p>Predict Price： <span id="resultText"></span></p>
+  <p>Predict Trend： <span id="resultText"></span></p>
   <a href="choose.html">Home</a>
   
 </body>
