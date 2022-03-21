@@ -4,11 +4,35 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
   <title>Predict</title>
-
+  <style>
+    body,h1,p {font-family: "Raleway", sans-serif}
+    body, html {height: 100%}
+    .bgimg {
+      background-image: url('wallpaper.jpg');
+      min-height: 100%;
+      background-position: center;
+      background-size: cover;
+    }
+  
+    </style>
 </head>
 <script src="index.js"></script>
 <body>
+  <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+    <div class="w3-display-topleft w3-padding-large w3-xlarge">
+      Prediction
+    </div>
+    <div class="w3-display-middle">
+
+      <h1 class="w3-jumbo w3-animate-top">Prediction for Stock Price</h1>
+      <p>In this page, you can predict the stock price you choose by our machine learning model</p>
+      <p>(1) Choose a company and click the "Scrape" button, the system will scrape the past 7 days data from Twitter and sentiment analysis</p>
+      <p>(2) Choose a machine learning model to analysis and click the "Submit" button, the system will show you the result</p>
+      <hr class="w3-border-grey" style="margin:auto;width:40%"><br>
 
   <label>Choose one of the company</label><br>
   <select name="company" id="company">
@@ -16,7 +40,7 @@
     <option value="mcd">MCD</option>
 </select>
 <br>
-<input type="submit" value="search" onclick="search()"><br><br>
+<input type="submit" value="Scrape" onclick="search()"><br><br>
 <p><span id="message"></span></p>
   <label>Choose</label><br>
   <select name="model" id="type">
@@ -36,8 +60,14 @@
   
   <input type="submit" value="Submit" onclick="submit()"><br><br>
 
-  <p>Predict Price： <span id="resultText"></span></p>
-  <a href="choose.html">Home</a>
-  
+  <p style="font-size:35px">Predict Price： <span id="resultText"></span></p>
+  </div>
+  <div class="w3-display-bottomleft w3-padding-large">
+    Capstone project by Chan Hong Yi
+  </div>
+  <div class="w3-display-bottomright w3-padding-large">
+    <a href="choose.html">Home</a>
+  </div>
+  </div>
 </body>
 </html>

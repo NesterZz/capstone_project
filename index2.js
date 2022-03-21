@@ -23,7 +23,7 @@ function search(){
     const data2 = {
         company
     }    
-    document.getElementById('message').innerHTML='Model training~~';
+    document.getElementById('message').innerHTML='Data are scraping from Twitter~~';
     postData('http://127.0.0.1:1000/scarpe',data2)
             .then(data2=>{
                 const result = data2.return;
@@ -33,7 +33,7 @@ function search(){
                 console.log(result2);
                 document.getElementById('good').value=result;
                 document.getElementById('bad').value=result2;
-                document.getElementById('message').innerHTML='Model training done';
+                document.getElementById('message').innerHTML='Data scraping done';
             })
 }
 
