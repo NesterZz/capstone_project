@@ -21,12 +21,12 @@ import pickle
 # Load
 with open(company+'_cleaned.pickle', 'rb') as f:
     new_dict = pickle.load(f)
-print("Show the cleaned data")
-print(new_dict)
+
+
 
 df_Company =pd.read_csv(company+"_Price.csv")
-print("Show the price data")
-print(df_Company)
+
+
 
 new_dict['Prices']=''
 
@@ -39,7 +39,7 @@ for i in range (0,len(new_dict)):
             #print(get_stock_date," ",get_tweet_date)
             # ccdata.set_value(i,'Prices',int(read_stock_p.Close[j]))
             new_dict['Prices'].iloc[i] = int(df_Company.Close[j])
-print(new_dict)
+
 
 
 #for i in range(0,len(new_dict)):
@@ -50,7 +50,7 @@ print(new_dict)
 new_dict['Prices'].replace('', np.nan, inplace=True) #change null data to np.nan
 new_dict.dropna(axis=0, how='any',inplace=True) #remove all null data
 new_dict.reset_index(drop=True, inplace=True)
-print(new_dict)
+
 
 #Making "prices" column as integer so mathematical operations could be performed easily.
 new_dict['Prices'] = new_dict['Prices'].apply(np.int64)
@@ -76,10 +76,10 @@ for indexx, row in new_dict.T.iteritems():
     except TypeError:
         print (new_dict.loc[indexx, 'Tweet'])
         print (indexx)
-print(new_dict)
+
 
 train_Company=new_dict[['Date','Prices','Comp','Negative','Neutral','Positive']].copy()
-print(train_Company)
+
 
 test_end_index = 0
 train_start_index = train_Company.shape[0]-1
@@ -87,9 +87,9 @@ train_end_index = int(train_Company.shape[0]*0.3)
 test_start_index = train_end_index-1
 
 train = train_Company.loc[train_end_index:train_start_index]
-print(train)
+
 test = train_Company.loc[test_end_index:test_start_index]
-print(test)
+
 sentiment_score_list = []
 for date, row in train.T.iteritems():
     sentiment_score = np.asarray([train_Company.loc[date, 'Negative'],train_Company.loc[date, 'Positive']])
@@ -162,9 +162,20 @@ plt.savefig(company+"_LSTM.png")
 from sklearn.metrics import r2_score
 
 print(r2_score(y_test, y_pred))
+r2score=r2_score(y_test, y_pred)
+
+def r2score2():
+    return r2score
+
+def predict(input):
+    pred=lstm.predict(input)
+    print(pred)
+    return pred
 
 # Save
 import gzip
 with gzip.GzipFile(company+'_LSTM_model.pgz', 'w') as f:
     pickle.dump(lstm,f)
 print("Model saved!")
+with gzip.GzipFile(company+'_LSTM_Score.pgz', 'w') as e:
+    pickle.dump(r2score,e)

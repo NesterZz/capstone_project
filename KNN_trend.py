@@ -39,7 +39,7 @@ for i in range (0,len(new_dict)):
         if(str(get_stock_date)==str(get_tweet_date)):
             #print(get_stock_date," ",get_tweet_date)
             # ccdata.set_value(i,'Prices',int(read_stock_p.Close[j]))
-            new_dict['Prices'].iloc[i] = int(df_Company.Close[j])
+            new_dict['Prices'].iloc[i] = (df_Company.Close[j])
 print(new_dict)
 
 
@@ -88,7 +88,7 @@ print(aaadata)
 aaadata.to_csv("ff.csv",index=False)
 
 #Making "prices" column as integer so mathematical operations could be performed easily.
-new_dict['Prices'] = new_dict['Prices'].apply(np.int64)
+
 
 new_dict["Comp"] = ''
 new_dict["Negative"] = ''
@@ -158,8 +158,10 @@ print(prediction)
 
 
 
-from sklearn.metrics import r2_score
-print(r2_score(y_test, prediction))
+from sklearn.metrics import r2_score,accuracy_score
+
+print(accuracy_score(y_test, prediction))
+acc=accuracy_score(y_test, prediction)
 
 
 
@@ -168,3 +170,5 @@ import gzip
 with gzip.GzipFile(company+'_KNN_model_trend.pgz', 'w') as f:
     pickle.dump(knn,f)
 print("Model saved!")
+with gzip.GzipFile(company+'_KNN_trend_Score.pgz', 'w') as e:
+    pickle.dump(acc,e)

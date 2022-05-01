@@ -9,12 +9,12 @@ import matplotlib.pyplot as plt
 import csv
 plt.style.use('fivethirtyeight')
 
-#company="MCD/MCD"
-company="AAPL/AAPL"
+company="MCD/MCD"
+#company="AAPL/AAPL"
 #company="KO/KO"
 
-#company_name="MCD"
-company_name="AAPL"
+company_name="MCD"
+#company_name="AAPL"
 #company_name="KO"
 
 import pickle
@@ -132,9 +132,12 @@ fig.savefig(company+"_KNN.png")
 from sklearn.metrics import r2_score
 
 print(r2_score(y_test, prediction))
+r2score=r2_score(y_test, prediction)
 
 # Save
 import gzip
 with gzip.GzipFile(company+'_KNN_model.pgz', 'w') as f:
     pickle.dump(knn,f)
 print("Model saved!")
+with gzip.GzipFile(company+'_KNN_Score.pgz', 'w') as e:
+    pickle.dump(r2score,e)

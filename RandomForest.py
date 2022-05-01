@@ -9,12 +9,12 @@ import matplotlib.pyplot as plt
 import csv
 plt.style.use('fivethirtyeight')
 
-#company="MCD/MCD"
-company="AAPL/AAPL"
+company="MCD/MCD"
+#company="AAPL/AAPL"
 #company="KO/KO"
 
-#company_name="MCD"
-company_name="AAPL"
+company_name="MCD"
+#company_name="AAPL"
 #company_name="KO"
 
 import pickle
@@ -132,9 +132,13 @@ fig.savefig(company+"_Random_Forest.png")
 from sklearn.metrics import r2_score
 
 print(r2_score(y_test, prediction))
+r2score=r2_score(y_test, prediction)
 
 # Save
 import gzip
 with gzip.GzipFile(company+'_RandomForest_model.pgz', 'w') as f:
     pickle.dump(rf,f)
 print("Model saved!")
+
+with gzip.GzipFile(company+'_RandomForest_Score.pgz', 'w') as e:
+    pickle.dump(r2score,e)

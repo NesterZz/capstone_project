@@ -12,3 +12,9 @@ def predict(input):
     pred=LG_Model.predict(input)[0]
     print(pred)
     return pred
+
+with gzip.open(company+'_LogisticRegression_trend_Score.pgz','r') as e:
+    acc = pickle.load(e)
+
+def acc2():
+    return acc

@@ -7,6 +7,8 @@ import time;
 from nltk.sentiment import SentimentIntensityAnalyzer
 import sys
 import json
+import re
+import dataframe_image as dfi
 
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
@@ -209,4 +211,24 @@ def trytry2(input):
     
     neg=tweet_df['Negative'].mean()
     
+    df2=tweet_df[['text','Positive','Negative']]
+    print(df2)
+
+
+    adata=pd.DataFrame()
+    aadata=pd.DataFrame()
+    for index,row in df2.iterrows():
+        stre=row["text"]
+        my_new_string = re.sub('[^a-zA-Z0-9:/@#-.% ]', '', stre)
+        temp_df = pd.DataFrame([[my_new_string,df2['Positive'].iloc[index],df2['Negative'].iloc[index]]], columns = ['Tweet','Pos','Neg'])
+        adata = pd.concat([adata, temp_df], axis = 0).reset_index(drop = True)
+    print(adata)
+    for x in range(0,9):
+        temp_df = pd.DataFrame([[adata['Tweet'].iloc[x],adata['Pos'].iloc[x],adata['Neg'].iloc[x]]], columns = ['Tweet','Pos','Neg'])
+        aadata = pd.concat([aadata, temp_df], axis = 0).reset_index(drop = True)
+    print(aadata)
+
+    pd.options.display.max_colwidth=500
+    dfi.export(aadata, 'dataframe.png',max_rows=1000)
+
     return neg    

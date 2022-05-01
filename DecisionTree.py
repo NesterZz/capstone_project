@@ -9,12 +9,12 @@ import matplotlib.pyplot as plt
 import csv
 plt.style.use('fivethirtyeight')
 
-#company="MCD/MCD"
-company="AAPL/AAPL"
+company="MCD/MCD"
+#company="AAPL/AAPL"
 #company="KO/KO"
 
-#company_name="MCD"
-company_name="AAPL"
+company_name="MCD"
+#company_name="AAPL"
 #company_name="KO"
 
 
@@ -124,7 +124,7 @@ print(predictions_df_)
 
 from sklearn.metrics import r2_score
 print(r2_score(y_test, prediction))
-
+r2score=r2_score(y_test, prediction)
 
 ax = predictions_df_.rename(columns={"Prices": "predicted_price"}).plot(title=company_name+' Decision Tree predicted prices')#predicted value
 ax.set_xlabel("Indexes")
@@ -137,3 +137,5 @@ import gzip
 with gzip.GzipFile(company+'_DecisionTree_model.pgz', 'w') as f:
     pickle.dump(model,f)
 print("Model saved!")
+with gzip.GzipFile(company+'_DecisionTree_Score.pgz', 'w') as e:
+    pickle.dump(r2score,e)

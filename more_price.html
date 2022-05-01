@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+  <title>Predict</title>
+  <style>
+    body,h1,p {font-family: "Raleway", sans-serif}
+    body, html {height: 100%}
+    .bgimg {
+      background-image: url('wallpaper.jpg');
+      min-height: 100%;
+      background-position: center;
+      background-size: cover;
+    }
+  
+    </style>
+</head>
+<script src="index3.js"></script>
+
+<script language="JavaScript" type="text/javascript">
+  function show_MCD_lg() { 
+    window.open("./MCD/MCD_Linear_Regression_more.png","","resizable=1,height=500,width=500"); 
+  }
+  function show_AAPL_lg() { 
+    window.open("./AAPL/AAPL_Linear_Regression_more.png","","resizable=1,height=500,width=500"); 
+  }
+  function show_mcd_his() { 
+  window.open("./MCD/MCD.png","","resizable=1,height=500,width=500"); 
+  }
+  function show_aapl_his() { 
+  window.open("./AAPL/AAPL.png","","resizable=1,height=500,width=500"); 
+  }
+  function show_img2() { 
+    window.open("more_dataframe.png","","resizable=1,height=1000,width=1000"); 
+  }
+</script>
+
+<body>
+  <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+    <div class="w3-display-topleft w3-padding-large w3-xlarge">
+      Prediction
+    </div>
+    <div class="w3-display-middle">
+
+      <h1 class="w3-jumbo w3-animate-top">Prediction for Stock Price</h1>
+      <p>In this page, you can predict the stock price you choose by our machine learning model</p>
+      <p>(1) Choose a company and click the "Scrape" button, the system will scrape the past 7 days data from Twitter and sentiment analysis</p>
+      <p>(2) Choose a machine learning model to analysis and click the "Submit" button, the system will show you the result</p>
+      <hr class="w3-border-grey" style="margin:auto;width:40%"><br>
+
+  <label>Choose one of the company</label>&emsp;&emsp;<span id="his"></span>&emsp;&emsp;<span id="img"></span>&emsp;&emsp;<span id="img2"></span><br></span>
+  <select name="company" id="company">
+    <option value="aapl" selected>AAPL</option>
+    <option value="mcd">MCD</option>
+</select>
+
+<input type="submit" value="Scrape" onclick="search()"><br><span id="message"></span><br><span id="today" style="font-size:35px"></span><br>
+
+  <label>Select Model</label><br>
+  <select name="model" id="type">
+
+    <option value="lg">Linear Regression</option>
+    
+</select>
+<br>
+
+
+  <label>pos</label><br>
+  <input type="text" id="good" value=""><br>
+  <label>neg</label><br>
+  <input type="text" id="bad" value=""><br>
+  <label>Last closing Price</label><br>
+  <input type="text" id="close" value=""><br>
+  <label>Volume</label><br>
+  <input type="text" id="vol" value=""><br>
+  
+  <input type="submit" value="Submit" onclick="submit()" style="margin-top:5px"><br>
+
+  <p style="font-size:20px">Predict Price： <span id="resultText"></span><br>R2 score: (<span id="r2"></span>)<br></p>
+  
+  </div>
+  <div class="w3-display-bottomleft w3-padding-large">
+    Capstone project by Chan Hong Yi
+  </div>
+  <div class="w3-display-bottomright w3-padding-large">
+    <a href="index.html">Home</a>
+  </div>
+  </div>
+</body>
+</html>

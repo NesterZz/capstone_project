@@ -20,6 +20,15 @@ function postData(url, data) {
 
 function search(){
     const company = document.getElementById('company').value;
+    document.getElementById('his').innerHTML="<a href='javascript:show_"+company+"_his()'>See Past Year History Prices</a>";
+    
+    const today = new Date();
+
+    const open_date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+(today.getDate()-7);
+    const end_date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
+
+    document.getElementById('today').innerHTML=""+open_date+" to "+end_date+"";
+    
     const data2 = {
         company
     }    
@@ -34,6 +43,7 @@ function search(){
                 document.getElementById('good').value=result;
                 document.getElementById('bad').value=result2;
                 document.getElementById('message').innerHTML='Data scraping done';
+                document.getElementById('img2').innerHTML="<a href='javascript:show_img2()'>Show some Tweets</a>";
             })
 }
 
@@ -57,6 +67,8 @@ function submit(){
                 const result = data.return;
                 console.log(data);
                 console.log(result);
+                const acc = data.acc;
+                document.getElementById('acc').innerHTML=acc;
                 if(result=='0'){document.getElementById('resultText').innerHTML="AAPL will going down";}
                 if(result=='1'){document.getElementById('resultText').innerHTML="AAPL will going up";}
                 if(result=='2'){document.getElementById('resultText').innerHTML="AAPL will have same price";}
@@ -67,6 +79,8 @@ function submit(){
                 const result = data.return;
                 console.log(data);
                 console.log(result);
+                const acc = data.acc;
+                document.getElementById('acc').innerHTML=acc;
                 if(result=='0'){document.getElementById('resultText').innerHTML="AAPL will going down";}
                 if(result=='1'){document.getElementById('resultText').innerHTML="AAPL will going up";}
                 if(result=='2'){document.getElementById('resultText').innerHTML="AAPL will have same price";}
@@ -77,6 +91,8 @@ function submit(){
                 const result = data.return;
                 console.log(data);
                 console.log(result);
+                const acc = data.acc;
+                document.getElementById('acc').innerHTML=acc;
                 if(result=='0'){document.getElementById('resultText').innerHTML="AAPL will going down";}
                 if(result=='1'){document.getElementById('resultText').innerHTML="AAPL will going up";}
                 if(result=='2'){document.getElementById('resultText').innerHTML="AAPL will have same price";}
@@ -87,6 +103,8 @@ function submit(){
                 const result = data.return;
                 console.log(data);
                 console.log(result);
+                const acc = data.acc;
+                document.getElementById('acc').innerHTML=acc;
                 if(result=='0'){document.getElementById('resultText').innerHTML="AAPL will going down";}
                 if(result=='1'){document.getElementById('resultText').innerHTML="AAPL will going up";}
                 if(result=='2'){document.getElementById('resultText').innerHTML="AAPL will have same price";}
@@ -97,6 +115,8 @@ function submit(){
                 const result = data.return;
                 console.log(data);
                 console.log(result);
+                const acc = data.acc;
+                document.getElementById('acc').innerHTML=acc;
                 if(result=='0'){document.getElementById('resultText').innerHTML="AAPL will going down";}
                 if(result=='1'){document.getElementById('resultText').innerHTML="AAPL will going up";}
                 if(result=='2'){document.getElementById('resultText').innerHTML="AAPL will have same price";}
@@ -109,6 +129,8 @@ function submit(){
                 const result = data.return;
                 console.log(data);
                 console.log(result);
+                const acc = data.acc;
+                document.getElementById('acc').innerHTML=acc;
                 if(result=='0'){document.getElementById('resultText').innerHTML="MCD will going down";}
                 if(result=='1'){document.getElementById('resultText').innerHTML="MCD will going up";}
                 if(result=='2'){document.getElementById('resultText').innerHTML="MCD will have same price";}
@@ -119,6 +141,8 @@ function submit(){
                 const result = data.return;
                 console.log(data);
                 console.log(result);
+                const acc = data.acc;
+                document.getElementById('acc').innerHTML=acc;
                 if(result=='0'){document.getElementById('resultText').innerHTML="MCD will going down";}
                 if(result=='1'){document.getElementById('resultText').innerHTML="MCD will going up";}
                 if(result=='2'){document.getElementById('resultText').innerHTML="MCD will have same price";}
@@ -129,6 +153,8 @@ function submit(){
                 const result = data.return;
                 console.log(data);
                 console.log(result);
+                const acc = data.acc;
+                document.getElementById('acc').innerHTML=acc;
                 if(result=='0'){document.getElementById('resultText').innerHTML="MCD will going down";}
                 if(result=='1'){document.getElementById('resultText').innerHTML="MCD will going up";}
                 if(result=='2'){document.getElementById('resultText').innerHTML="MCD will have same price";}
@@ -139,6 +165,8 @@ function submit(){
                 const result = data.return;
                 console.log(data);
                 console.log(result);
+                const acc = data.acc;
+                document.getElementById('acc').innerHTML=acc;
                 if(result=='0'){document.getElementById('resultText').innerHTML="MCD will going down";}
                 if(result=='1'){document.getElementById('resultText').innerHTML="MCD will going up";}
                 if(result=='2'){document.getElementById('resultText').innerHTML="MCD will have same price";}
@@ -149,6 +177,8 @@ function submit(){
                 const result = data.return;
                 console.log(data);
                 console.log(result);
+                const acc = data.acc;
+                document.getElementById('acc').innerHTML=acc;
                 if(result=='0'){document.getElementById('resultText').innerHTML="MCD will going down";}
                 if(result=='1'){document.getElementById('resultText').innerHTML="MCD will going up";}
                 if(result=='2'){document.getElementById('resultText').innerHTML="MCD will have same price";}

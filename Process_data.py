@@ -22,7 +22,7 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth,wait_on_rate_limit=True)
 
-tweet_url = pd.read_csv('AAPL.txt', index_col= None, header = None, names = ["tweet_urls"])
+tweet_url = pd.read_csv('KO.txt', index_col= None, header = None, names = ["tweet_urls"])
 tweet_url.head()
 
 #Extract the tweet id
